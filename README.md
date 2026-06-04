@@ -76,3 +76,12 @@ terraform destroy
 ## License
 
 MIT
+
+---
+
+## About the Author
+
+This project is part of a series of didactic content published on my blog. If you'd like to read the full explanation, architecture breakdown, and step-by-step walkthrough that accompanies this repository, visit:
+
+- **English:** [https://medium.com/@biagolini](https://medium.com/@biagolini)
+- **Portuguese:** [https://builder.aws.com/community/@cbiagolini](https://builder.aws.com/community/@cbiagolini)
