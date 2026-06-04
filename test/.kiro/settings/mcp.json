@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "error-handling-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://97ckpenkgh.execute-api.us-east-1.amazonaws.com/mcp",
+        "--service", "execute-api",
+        "--region", "us-east-1"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "error-demo-agent",
+  "description": "Agent for testing MCP error handling patterns (isError vs crash).",
+  "prompt": "You are a car inventory assistant testing MCP error handling patterns. You have access to 4 tools: get_car_details (standard), search_cars_by_type (standard), get_car_details_with_graceful_error (returns isError with helpful message on not found), and get_car_details_with_crash (crashes on not found). When the user asks you to use a specific tool variant, use exactly that tool. If a graceful error tells you to try an alternative tool, follow its suggestion. Do not attempt workarounds if the crash tool fails — simply report the failure.",
+  "tools": ["read", "@error-handling-mcp"],
+  "allowedTools": ["read", "@error-handling-mcp"],
+  "includeMcpJson": false,
+  "mcpServers": {
+    "error-handling-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-proxy-for-aws@latest",
+        "https://97ckpenkgh.execute-api.us-east-1.amazonaws.com/mcp",
+        "--service", "execute-api",
+        "--region", "us-east-1"
+      ]
+    }
+  }
+}

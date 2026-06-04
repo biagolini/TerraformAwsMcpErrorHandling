@@ -1,0 +1,94 @@
+{
+  "info": {
+    "name": "MCP Error Handling Tests",
+    "description": "Tests for observing raw HTTP responses from the MCP server error patterns. Use with Postman to see what the MCP client receives for each error type.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "api_endpoint",
+      "value": "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/mcp",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Success - get_car_details",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_car_details\",\n    \"arguments\": {\n      \"car_id\": \"toyota_corolla_2020\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{api_endpoint}}",
+          "host": ["{{api_endpoint}}"]
+        }
+      }
+    },
+    {
+      "name": "Layer 1 - Timeout (transport error)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 2,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_car_details_with_timeout\",\n    \"arguments\": {\n      \"car_id\": \"toyota_corolla_2020\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{api_endpoint}}",
+          "host": ["{{api_endpoint}}"]
+        }
+      }
+    },
+    {
+      "name": "Layer 2 - Protocol error (JSON-RPC -32603)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_car_details_with_protocol_error\",\n    \"arguments\": {\n      \"car_id\": \"INVALID-999\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{api_endpoint}}",
+          "host": ["{{api_endpoint}}"]
+        }
+      }
+    },
+    {
+      "name": "Layer 3 - Graceful error (isError true)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 4,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_car_details_with_graceful_error\",\n    \"arguments\": {\n      \"car_id\": \"INVALID-999\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{api_endpoint}}",
+          "host": ["{{api_endpoint}}"]
+        }
+      }
+    }
+  ],
+  "auth": {
+    "type": "awsv4",
+    "awsv4": [
+      { "key": "region", "value": "us-east-1", "type": "string" },
+      { "key": "service", "value": "execute-api", "type": "string" },
+      { "key": "accessKey", "value": "{{aws_access_key_id}}", "type": "string" },
+      { "key": "secretKey", "value": "{{aws_secret_access_key}}", "type": "string" },
+      { "key": "sessionToken", "value": "{{aws_session_token}}", "type": "string" }
+    ]
+  }
+}

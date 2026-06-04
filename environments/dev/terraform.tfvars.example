@@ -1,0 +1,6 @@
+# Environment-specific variables
+# Copy this file to terraform.tfvars and fill with your values
+# DO NOT commit terraform.tfvars to version control
+
+aws_region  = "us-east-1"
+aws_profile = "your-aws-profile"
